@@ -2,19 +2,16 @@ default: &default
   adapter: postgresql
   encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  host: <%= ENV['DATABASE_HOST'] %>
-  username: <%= ENV['DATABASE_USERNAME'] %>
-  password: <%= ENV['DATABASE_PASSWORD'] %>
-  port: <%= ENV['DATABASE_PORT'] %>
+  url: <%= ENV['DATABASE_URL'] %>
 
 development:
   <<: *default
-  database: tebukuro_development
+  database: wine_store_development
 
 test:
   <<: *default
-  database: tebukuro_test
+  database: wine_store_test
 
 production:
   <<: *default
-  database: tebukuro_production
+  database: wine_store_production
