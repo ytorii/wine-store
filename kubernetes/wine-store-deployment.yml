@@ -1,0 +1,37 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: wine-store
+  labels:
+    app: wine-store
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wine-store
+  template:
+    metadata:
+      labels:
+        app: wine-store
+    spec:
+      volumes:
+      - name: web-sock
+        emptyDir: {}
+      containers:
+        - image: $RAILS_IMAGE
+          name: wine-store
+          env:
+            - name: RAILS_ENV
+              value: "development"
+            - name: DATABASE_HOST
+              value: postgresql
+            - name: DATABASE_USERNAME
+              value: 'postgres' 
+            - name: DATABASE_PASSWORD
+              value: '' 
+            - name: DATABASE_PORT
+              value: "5432"
+          ports:
+            - containerPort: 3000
+              name: wine-store
+          command: ["bundle", "exec", "rails", "s"]
