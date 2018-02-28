@@ -1,0 +1,4 @@
+docker login -u oauth2accesstoken -p "$(gcloud auth application-default print-access-token)" https://gcr.io
+gcloud components install docker-credential-gcr
+docker-credential-gcr configure-docker
+

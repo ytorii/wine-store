@@ -1,0 +1,44 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.9.0 (093c756)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: backend
+  name: backend
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: backend
+    spec:
+      containers:
+      - args:
+        - bundle
+        - exec
+        - rails
+        - s
+        - -p
+        - "3000"
+        - -b
+        - 0.0.0.0
+        env:
+        - name: DATABASE_URL
+          value: postgres://winestore:winestore@db:5432/postgresql
+        image: us.gcr.io/cyclepark-docker/winestore-rails:latest
+        imagePullPolicy: IfNotPresent
+        imagePullSecrets:
+        - name: gcr
+        name: backend
+        ports:
+        - containerPort: 3000
+        resources: {}
+        stdin: true
+        tty: true
+      restartPolicy: Always
+status: {}
